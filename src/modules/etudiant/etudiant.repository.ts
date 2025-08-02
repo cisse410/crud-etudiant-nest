@@ -3,7 +3,7 @@ import { Prisma } from 'generated/prisma';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class EtudiantService {
+export class EtudiantRepository {
   constructor(private readonly databaseService: DatabaseService) {}
   async create(createEtudiantDto: Prisma.EtudiantCreateInput) {
     return this.databaseService.etudiant.create({ data: createEtudiantDto });
@@ -24,7 +24,7 @@ export class EtudiantService {
     });
   }
 
-  async remove(id: number) {
-    return this.databaseService.etudiant.delete({ where: { id: id } });
+  async remove(id: number): Promise<void> {
+    await this.databaseService.etudiant.delete({ where: { id: id } });
   }
 }
